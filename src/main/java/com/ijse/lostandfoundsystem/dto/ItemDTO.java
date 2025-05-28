@@ -10,6 +10,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 public class ItemDTO implements Serializable {
+    private Long id;
     private String itemName;
-    private String ItemStatus;
+    private String description;
+    private String itemStatus;
 }

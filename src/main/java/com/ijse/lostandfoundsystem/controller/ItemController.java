@@ -1,6 +1,7 @@
 package com.ijse.lostandfoundsystem.controller;
 
 import com.ijse.lostandfoundsystem.dto.ItemDTO;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -11,7 +12,7 @@ public class ItemController {
         return "Item controller is running";
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ItemDTO reportLostItem(@RequestBody ItemDTO itemDTO){
         System.out.println(itemDTO);
         return itemDTO;
