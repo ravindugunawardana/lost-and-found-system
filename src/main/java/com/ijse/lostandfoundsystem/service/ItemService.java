@@ -1,4 +1,13 @@
 package com.ijse.lostandfoundsystem.service;
 
-public class ItemService {
+import com.ijse.lostandfoundsystem.dto.ItemDTO;
+
+import java.util.List;
+
+public interface ItemService {
+    void reportItem(ItemDTO itemDTO);
+    ItemDTO getSelectedItem(Long itemId);
+    List<ItemDTO> getAllItems();
+    void updateItem(Long itemId, ItemDTO itemDTO);
+    void deleteItem(Long itemId);
 }
