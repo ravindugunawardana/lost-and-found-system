@@ -5,10 +5,8 @@ import com.ijse.lostandfoundsystem.entity.ItemEntity;
 import com.ijse.lostandfoundsystem.repository.ItemRepository;
 import com.ijse.lostandfoundsystem.service.ItemService;
 import com.ijse.lostandfoundsystem.util.EntityDTOConversion;
-import com.ijse.lostandfoundsystem.util.UtilityData;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,13 +23,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void reportItem(ItemDTO itemDTO) {
-        //itemDTO.setId(UtilityData.generateItemId());
         ItemEntity itemEntity = itemRepository.save(entityDTOConversion.toItemEntity(itemDTO));
         System.out.println("Saved item: "+ itemEntity);
     }
 
     @Override
-    public ItemDTO getSelectedItem(int itemId) {
+    public ItemDTO getSelectedItem(Integer itemId) {
         ItemEntity itemEntity = itemRepository.findById(itemId).orElseThrow();
         return entityDTOConversion.toItemDTO(itemRepository.getReferenceById(itemId));
     }
@@ -42,12 +39,20 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateItem(Long itemId, ItemDTO itemDTO) {
+    public void updateItem(Integer itemId, ItemDTO itemDTO) {
+        ItemEntity existingEntity = itemRepository.findById(itemId).orElseThrow();
 
+        existingEntity.setItemName(itemDTO.getItemName());
+        existingEntity.setDescription(itemDTO.getDescription());
+        existingEntity.setItemStatus(itemDTO.getItemStatus());
+
+        itemRepository.save(existingEntity);
     }
 
     @Override
-    public void deleteItem(Long itemId) {
+    public void deleteItem(Integer itemId) {
+        ItemEntity existingEntity = itemRepository.findById(itemId).orElseThrow();
+        itemRepository.deleteById(itemId);
 
     }
 }

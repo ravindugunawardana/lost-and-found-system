@@ -42,13 +42,13 @@ public class ItemController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> updateItem(@RequestParam ("itemId") Long itemId, @RequestBody ItemDTO itemDTO){
+    public ResponseEntity<Void> updateItem(@RequestParam ("itemId") Integer itemId, @RequestBody ItemDTO itemDTO){
         itemService.updateItem(itemId, itemDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteItem(@RequestParam ("itemId") Long itemId){
+    public ResponseEntity<Void> deleteItem(@RequestParam ("itemId") Integer itemId){
         itemService.deleteItem(itemId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
