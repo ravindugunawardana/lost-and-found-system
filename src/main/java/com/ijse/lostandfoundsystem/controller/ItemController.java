@@ -25,14 +25,14 @@ public class ItemController {
         return "Item controller is running";
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ItemDTO reportLostItem(@RequestBody ItemDTO itemDTO){
-        System.out.println(itemDTO);
-        return itemDTO;
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> reportLostItem(@RequestBody ItemDTO itemDTO){
+        itemService.reportItem(itemDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping(value = "{itemId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ItemDTO> getSelectedItem(@PathVariable Long itemId){
+    public ResponseEntity<ItemDTO> getSelectedItem(@PathVariable int itemId){
         return ResponseEntity.ok(itemService.getSelectedItem(itemId));
     }
 
