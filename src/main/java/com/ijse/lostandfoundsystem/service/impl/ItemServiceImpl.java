@@ -30,7 +30,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public ItemDTO getSelectedItem(Integer itemId) {
         ItemEntity itemEntity = itemRepository.findById(itemId).orElseThrow();
-        return entityDTOConversion.toItemDTO(itemRepository.getReferenceById(itemId));
+        return entityDTOConversion.toItemDTO(itemEntity);
     }
     @Override
     public List<ItemDTO> getAllItems() {
@@ -53,6 +53,5 @@ public class ItemServiceImpl implements ItemService {
     public void deleteItem(Integer itemId) {
         ItemEntity existingEntity = itemRepository.findById(itemId).orElseThrow();
         itemRepository.deleteById(itemId);
-
     }
 }
