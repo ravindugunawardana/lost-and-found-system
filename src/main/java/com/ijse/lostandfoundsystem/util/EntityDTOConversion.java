@@ -1,7 +1,9 @@
 package com.ijse.lostandfoundsystem.util;
 
 import com.ijse.lostandfoundsystem.dto.ItemDTO;
+import com.ijse.lostandfoundsystem.dto.RequestDTO;
 import com.ijse.lostandfoundsystem.entity.ItemEntity;
+import com.ijse.lostandfoundsystem.entity.RequestEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -23,9 +25,21 @@ public class EntityDTOConversion {
         return modelMapper.map(itemDTO, ItemEntity.class);
     }
 
-    public List<ItemDTO> toItemDTOList(List<ItemEntity> itemEntities){
-        return modelMapper.map(itemEntities,new TypeToken<List<ItemDTO>>(){}.getType());
+    public List<ItemDTO> toItemDTOList(List<ItemEntity> itemEntityList){
+        return modelMapper.map(itemEntityList,new TypeToken<List<ItemDTO>>(){}.getType());
     }
 
     //Request
+
+    public RequestDTO toRequestDTO(RequestEntity requestEntity){
+        return modelMapper.map(requestEntity, RequestDTO.class);
+    }
+
+    public RequestEntity toRequestEntity(RequestDTO requestDTO){
+        return modelMapper.map(requestDTO, RequestEntity.class);
+    }
+
+    public List<RequestDTO> toRequestDTOList(List<RequestEntity> requestEntityList){
+        return modelMapper.map(requestEntityList, new TypeToken<List<RequestDTO>>(){}.getType());
+    }
 }
