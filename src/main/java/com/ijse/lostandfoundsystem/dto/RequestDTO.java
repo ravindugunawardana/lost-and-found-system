@@ -15,7 +15,7 @@ public class RequestDTO implements Serializable {
 
     private Integer claimingItemId;
     private String claimerId;
-    private String ItemDescription;
+    private String itemDescription;
     private String  requestStatus;
     private Date lostDate;
     private String lostLocation;
