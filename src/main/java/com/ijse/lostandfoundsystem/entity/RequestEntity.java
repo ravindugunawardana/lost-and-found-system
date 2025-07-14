@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Entity
-@Table(name = "Requests")
+@Table(name = "requests")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
