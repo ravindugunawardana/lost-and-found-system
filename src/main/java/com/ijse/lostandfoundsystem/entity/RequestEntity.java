@@ -1,0 +1,27 @@
+package com.ijse.lostandfoundsystem.entity;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "Requests")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class RequestEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private Integer claimingItemId;
+    private String claimerId;
+    private String ItemDescription;
+    private String  requestStatus;
+    private Date lostDate;
+    private String lostLocation;
+}
