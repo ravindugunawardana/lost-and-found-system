@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "items")
@@ -15,7 +17,7 @@ import java.time.LocalDate;
 public class ItemEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer itemId;
 
     private String itemName;
     private String description;
@@ -23,5 +25,11 @@ public class ItemEntity {
     private String locationLostOrFound;
     private LocalDate dateLostOrFound;
     private String category;
-    private Integer reportedByUserId;
+
+    @ManyToOne()
+    @JoinColumn(name = "userId")
+    private UserEntity reportedByUser;
+
+    @OneToMany(mappedBy = "itemEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RequestEntity> requestEntityList = new ArrayList<>();
 }

@@ -16,7 +16,7 @@ import java.util.Date;
 public class RequestEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer requestId;
 
     private Integer claimingItemId;
     private String claimerId;
@@ -24,4 +24,12 @@ public class RequestEntity {
     private String  requestStatus;
     private Date lostDate;
     private String lostLocation;
+
+    @ManyToOne()
+    @JoinColumn(name = "itemId", nullable = false)
+    private ItemEntity itemEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "userId", nullable = false)
+    private UserEntity userEntity;
 }
