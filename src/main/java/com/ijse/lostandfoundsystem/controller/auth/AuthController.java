@@ -24,15 +24,15 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/signUp")
+    @PostMapping("/signup")
     public ResponseEntity<String> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO){
         authService.signUp(signUpRequestDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
     }
 
-    @PostMapping("/signIn")
+    @PostMapping("/signin")
     public ResponseEntity<AuthResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO){
-        authService.signIn(signInRequestDTO);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        AuthResponseDTO authResponseDTO = authService.signIn(signInRequestDTO);
+        return ResponseEntity.ok(authResponseDTO);
     }
 }

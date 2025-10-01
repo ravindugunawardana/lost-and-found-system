@@ -15,8 +15,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Service
@@ -33,25 +33,30 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
-    public ResponseEntity<String>  signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
+    public ResponseEntity<String>  signUp(SignUpRequestDTO signUpRequestDTO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setFullName(signUpRequestDTO.getFullName());
         userEntity.setUsername(signUpRequestDTO.getUsername());
-        userEntity.setPassword(signUpRequestDTO.getPassword());
+        userEntity.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
         userEntity.setContactNumber(signUpRequestDTO.getContactNumber());
+        userEntity.setRole(signUpRequestDTO.getRole());
+        userEntity.setIsActive(true);
         userRepository.save(userEntity);
-        return ResponseEntity.ok("User registered");
-    }
-
+        return ResponseEntity.ok("User successfully registered");
+}
     @Override
-    public ResponseEntity<AuthResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO) {
+    public AuthResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signInRequestDTO.getUsername(), signInRequestDTO.getPassword()));
+                new UsernamePasswordAuthenticationToken(
+                        signInRequestDTO.getUsername(),
+                        signInRequestDTO.getPassword()));
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtUtils.generateTokens(userDetails);
-                return ResponseEntity.ok(AuthResponseDTO.builder().token(token).build());
-
+        return AuthResponseDTO.builder().token(token).build();
     }
 }
