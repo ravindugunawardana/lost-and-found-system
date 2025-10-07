@@ -1,8 +1,8 @@
 package com.ijse.lostandfoundsystem.controller.auth;
 
+import com.ijse.lostandfoundsystem.dto.UserDTO;
 import com.ijse.lostandfoundsystem.dto.auth.AuthResponseDTO;
 import com.ijse.lostandfoundsystem.dto.auth.SignInRequestDTO;
-import com.ijse.lostandfoundsystem.dto.auth.SignUpRequestDTO;
 import com.ijse.lostandfoundsystem.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,8 +25,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO){
-        authService.signUp(signUpRequestDTO);
+    public ResponseEntity<String> signUp(@RequestBody UserDTO userDTO){
+        authService.signUp(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
     }
 

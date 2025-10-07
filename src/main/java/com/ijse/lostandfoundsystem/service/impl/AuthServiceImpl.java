@@ -1,8 +1,8 @@
 package com.ijse.lostandfoundsystem.service.impl;
 
+import com.ijse.lostandfoundsystem.dto.UserDTO;
 import com.ijse.lostandfoundsystem.dto.auth.AuthResponseDTO;
 import com.ijse.lostandfoundsystem.dto.auth.SignInRequestDTO;
-import com.ijse.lostandfoundsystem.dto.auth.SignUpRequestDTO;
 import com.ijse.lostandfoundsystem.entity.UserEntity;
 import com.ijse.lostandfoundsystem.repository.UserRepository;
 import com.ijse.lostandfoundsystem.security.JwtUtils;
@@ -37,17 +37,17 @@ public class AuthServiceImpl implements AuthService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public ResponseEntity<String>  signUp(SignUpRequestDTO signUpRequestDTO) {
+    public void signUp(UserDTO userDTO) {
         UserEntity userEntity = new UserEntity();
-        userEntity.setFullName(signUpRequestDTO.getFullName());
-        userEntity.setUsername(signUpRequestDTO.getUsername());
-        userEntity.setPassword(passwordEncoder.encode(signUpRequestDTO.getPassword()));
-        userEntity.setContactNumber(signUpRequestDTO.getContactNumber());
-        userEntity.setRole(signUpRequestDTO.getRole());
+        userEntity.setFullName(userDTO.getFullName());
+        userEntity.setUsername(userDTO.getUsername());
+        userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userEntity.setContactNumber(userDTO.getContactNumber());
+        userEntity.setRole(userDTO.getRole());
         userEntity.setIsActive(true);
         userRepository.save(userEntity);
-        return ResponseEntity.ok("User successfully registered");
-}
+        ResponseEntity.ok("User successfully registered");
+    }
     @Override
     public AuthResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
