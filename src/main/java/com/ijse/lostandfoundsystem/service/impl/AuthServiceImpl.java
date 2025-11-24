@@ -24,17 +24,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtils jwtUtils;
+    private final JwtUtils jwtUtils;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void signUp(UserDTO userDTO) {
@@ -48,6 +44,7 @@ public class AuthServiceImpl implements AuthService {
         userRepository.save(userEntity);
         ResponseEntity.ok("User successfully registered");
     }
+
     @Override
     public AuthResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
         Authentication authentication = authenticationManager.authenticate(
@@ -57,6 +54,6 @@ public class AuthServiceImpl implements AuthService {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         String token = jwtUtils.generateTokens(userDetails);
-        return AuthResponseDTO.builder().token(token).build();
+        return AuthResponseDTO.builder().accessToken(token).build();
     }
 }
